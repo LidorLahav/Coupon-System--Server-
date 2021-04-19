@@ -36,4 +36,4 @@ I will do this by implementing RESTful Service on the server side, using Spring 
 
 ## Database
 
-![Database structure](https://github.com/LidorLahav/Coupon-System_Spring-Boot/blob/master/Images/Database%20structure.jpeg)
+![Database structure](https://github.com/LidorLahav/Coupon-System_Server/blob/master/Images/Database%20structure.jpeg)
