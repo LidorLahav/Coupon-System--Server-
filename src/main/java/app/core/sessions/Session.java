@@ -15,56 +15,56 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class Session {
 
-	// fields
-	public final String token; // identifier of a session
-	private Map<String, Object> attributes = new HashMap<>(); // session state
-	private long lastAccessed; // needed for managing session expiration
-	@Value("${session.max.inactive.interval:2}") // injection happens after CTOR
-	private long maxInactiveInterval; // in milliseconds - needed for managing session expiration
-	private static final int TOKEN_MAX_LENGTH = 15;
+    // fields
+    public final String token; // identifier of a session
+    private Map<String, Object> attributes = new HashMap<>(); // session state
+    private long lastAccessed; // needed for managing session expiration
+    @Value("${session.max.inactive.interval:2}") // injection happens after CTOR
+    private long maxInactiveInterval; // in milliseconds - needed for managing session expiration
+    private static final int TOKEN_MAX_LENGTH = 15;
 
-	// initializer (runs befor CTOR) - first strp after object creation
-	{
-		this.token = UUID.randomUUID().toString().replace("-", "").substring(0, TOKEN_MAX_LENGTH);
-		resetLastAccessed();
-	}
+    // initializer (runs before CTOR) - first strp after object creation
+    {
+        this.token = UUID.randomUUID().toString().replace("-", "").substring(0, TOKEN_MAX_LENGTH);
+        resetLastAccessed();
+    }
 
-	// methods
+    // methods
 
-	@PostConstruct // runs after CTOR
-	private void init() {
-		// fix the time units - for convenience
-		maxInactiveInterval = TimeUnit.MINUTES.toMillis(maxInactiveInterval);
-	}
+    @PostConstruct // runs after CTOR
+    private void init() {
+        // fix the time units - for convenience
+        maxInactiveInterval = TimeUnit.MINUTES.toMillis(maxInactiveInterval);
+    }
 
-	// reset the time of the session each time the client was active
-	public void resetLastAccessed() {
-		this.lastAccessed = System.currentTimeMillis();
-	}
+    // reset the time of the session each time the client was active
+    public void resetLastAccessed() {
+        this.lastAccessed = System.currentTimeMillis();
+    }
 
-	// this is needed for session context to decide on session invalidation
-	public long getLastAccessed() {
-		return lastAccessed;
-	}
+    // this is needed for session context to decide on session invalidation
+    public long getLastAccessed() {
+        return lastAccessed;
+    }
 
-	public void setAttribute(String attrName, Object attrVal) {
-		attributes.put(attrName, attrVal);
-	}
+    public void setAttribute(String attrName, Object attrVal) {
+        attributes.put(attrName, attrVal);
+    }
 
-	public Object getAttribute(String attrName) {
-		return attributes.get(attrName);
-	}
+    public Object getAttribute(String attrName) {
+        return attributes.get(attrName);
+    }
 
-	// this is needed for session context to decide on session invalidation
-	public long getMaxInactiveInterval() {
-		return maxInactiveInterval;
-	}
+    // this is needed for session context to decide on session invalidation
+    public long getMaxInactiveInterval() {
+        return maxInactiveInterval;
+    }
 
-	/**
-	 * @param maxInactiveInterval given in milis
-	 */
-	public void setMaxInactiveInterval(long maxInactiveInterval) {
-		this.maxInactiveInterval = maxInactiveInterval;
-	}
-	
+    /**
+     * @param maxInactiveInterval given in milis
+     */
+    public void setMaxInactiveInterval(long maxInactiveInterval) {
+        this.maxInactiveInterval = maxInactiveInterval;
+    }
+
 }

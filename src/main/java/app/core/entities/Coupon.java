@@ -21,160 +21,160 @@ import javax.persistence.Table;
 @Table(name = "coupons")
 public class Coupon {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@ManyToOne
-	private Company company;
-	@Enumerated(EnumType.STRING)
-	private Category category;
-	private String title;
-	private String description;
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private int amount;
-	private Double price;
-	private String image;
-	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
-	@JoinTable(name = "customers_vs_coupons", joinColumns = @JoinColumn(name = "coupon_id"), inverseJoinColumns = @JoinColumn(name = "customer_id"))
-	private List<Customer> customers;
-	
-	public enum Category {
-		Food, Electricity, Restaurant, Vacation, Sport, Furnitures, Clothing, Attractions;
-	}
-	
-	public Coupon() {
-	}
-	
-	public Coupon(Category category, String title, String description, LocalDate startDate, LocalDate endDate,
-			int amount, Double price, String image) {
-		super();
-		this.category = category;
-		this.title = title;
-		this.description = description;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.amount = amount;
-		this.price = price;
-		this.image = image;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @ManyToOne
+    private Company company;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+    private String title;
+    private String description;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private int amount;
+    private Double price;
+    private String image;
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+    @JoinTable(name = "customers_vs_coupons", joinColumns = @JoinColumn(name = "coupon_id"), inverseJoinColumns = @JoinColumn(name = "customer_id"))
+    private List<Customer> customers;
 
-	public void addCustomer(Customer customer) {// TODO: check if needed
-		if (this.customers == null) {
-			this.customers = new ArrayList<Customer>();
-		}
-		this.customers.add(customer);
-	}
-	
-	public List<Customer> getCustomers() {
-		return customers;
-	}
+    public enum Category {
+        Food, Electricity, Restaurant, Vacation, Sport, Furniture, Clothing, Attractions;
+    }
 
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
+    public Coupon() {
+    }
 
-	public void setCompany(Company company) {
-		this.company = company;
-	}
+    public Coupon(Category category, String title, String description, LocalDate startDate, LocalDate endDate,
+            int amount, Double price, String image) {
+        super();
+        this.category = category;
+        this.title = title;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.amount = amount;
+        this.price = price;
+        this.image = image;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void addCustomer(Customer customer) {
+        if (this.customers == null) {
+            this.customers = new ArrayList<Customer>();
+        }
+        this.customers.add(customer);
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public List<Customer> getCustomers() {
+        return customers;
+    }
 
-	public Company getCompany() {
-		return company;
-	}
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
-	public Category getCategory() {
-		return category;
-	}
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
-	public void setCategory(Category category) {
-		if(category != null) {
-			this.category = category;
-		}
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setTitle(String title) {
-		if(title != null && title != "") {
-			this.title = title;
-		}
-	}
+    public Company getCompany() {
+        return company;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public Category getCategory() {
+        return category;
+    }
 
-	public void setDescription(String description) {
-		if(description != null && description != "") {
-			this.description = description;
-		}
-	}
+    public void setCategory(Category category) {
+        if (category != null) {
+            this.category = category;
+        }
+    }
 
-	public LocalDate getStartDate() {
-		return startDate;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setStartDate(LocalDate startDate) {
-		if(startDate != null) {
-			this.startDate = startDate;
-		}
-	}
+    public void setTitle(String title) {
+        if (title != null && title != "") {
+            this.title = title;
+        }
+    }
 
-	public LocalDate getEndDate() {
-		return endDate;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setEndDate(LocalDate endDate) {
-		if(endDate != null) {
-			this.endDate = endDate;
-		}
-	}
+    public void setDescription(String description) {
+        if (description != null && description != "") {
+            this.description = description;
+        }
+    }
 
-	public int getAmount() {
-		return amount;
-	}
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
-	public void setAmount(int amount) {
-		if(amount > 0) {
-			this.amount = amount;
-		}
-	}
+    public void setStartDate(LocalDate startDate) {
+        if (startDate != null) {
+            this.startDate = startDate;
+        }
+    }
 
-	public Double getPrice() {
-		return price;
-	}
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
-	public void setPrice(Double price) {
-		if(price > 0) {
-			this.price = price;
-		}
-	}
+    public void setEndDate(LocalDate endDate) {
+        if (endDate != null) {
+            this.endDate = endDate;
+        }
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public int getAmount() {
+        return amount;
+    }
 
-	public void setImage(String image) {
-		if(image != null && image != "") {
-			this.image = image;
-		}
-	}
+    public void setAmount(int amount) {
+        if (amount > 0) {
+            this.amount = amount;
+        }
+    }
 
-	@Override
-	public String toString() {
-		return "Coupon [id=" + id + ", category=" + category + ", title=" + title + ", description=" + description
-				+ ", startDate=" + startDate + ", endDate=" + endDate + ", amount=" + amount + ", price=" + price
-				+ ", image=" + image + "]";
-	}
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        if (price > 0) {
+            this.price = price;
+        }
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        if (image != null && image != "") {
+            this.image = image;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Coupon [id=" + id + ", category=" + category + ", title=" + title + ", description=" + description
+                + ", startDate=" + startDate + ", endDate=" + endDate + ", amount=" + amount + ", price=" + price
+                + ", image=" + image + "]";
+    }
 
 }

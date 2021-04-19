@@ -11,17 +11,17 @@ import app.core.repositories.CouponRepository;
 @Service
 @Transactional
 public class JobService {
-	
-	private CouponRepository couponRepository;
-	
-	@Autowired
-	public JobService(CouponRepository couponRepository) {
-		this.couponRepository = couponRepository;
-		
-	}
-	
-	public void deleteExpiredCoupons() {
-		couponRepository.deleteByEndDateBefore(LocalDate.now());
-	}
+
+    private CouponRepository couponRepository;
+
+    @Autowired
+    public JobService(CouponRepository couponRepository) {
+        this.couponRepository = couponRepository;
+
+    }
+
+    public void deleteExpiredCoupons() {
+        couponRepository.deleteByEndDateBefore(LocalDate.now());
+    }
 
 }

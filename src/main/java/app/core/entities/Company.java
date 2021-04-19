@@ -15,83 +15,80 @@ import javax.persistence.Table;
 @Table(name = "companies")
 public class Company {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String name;
-	private String email;
-	private String password;
-	@OneToMany(mappedBy = "company" ,cascade = CascadeType.ALL)
-	private List<Coupon> coupons;
-	
-	public Company() {
-	}
-	
-	public Company(String name, String email, String password) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.password = password;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    private String email;
+    private String password;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    private List<Coupon> coupons;
 
-	public void addCoupon(Coupon coupon) {// TODO: check if needed
-		if (this.coupons == null) {
-			this.coupons = new ArrayList<Coupon>();
-		}
-		coupon.setCompany(this);
-		this.coupons.add(coupon);
-	}
-	
-	public int getId() {
-		return id;
-	}
+    public Company() {
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Company(String name, String email, String password) {
+        super();
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void addCoupon(Coupon coupon) {
+        if (this.coupons == null) {
+            this.coupons = new ArrayList<Coupon>();
+        }
+        coupon.setCompany(this);
+        this.coupons.add(coupon);
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		if(email != null && email != "") {
-			this.email = email;
-		}
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPassword(String password) {
-		if(password != null && password != "") {
-			this.password = password;
-		}
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public List<Coupon> getCoupons() {
-		return coupons;
-	}
+    public void setEmail(String email) {
+        if (email != null && email != "") {
+            this.email = email;
+        }
+    }
 
-	public void setCoupons(List<Coupon> coupons) {
-		this.coupons = coupons;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	@Override
-	public String toString() {
-		return "Company [name=" + name + ", email=" + email + "]";
-	}
-	
-	
-	
-	
+    public void setPassword(String password) {
+        if (password != null && password != "") {
+            this.password = password;
+        }
+    }
+
+    public List<Coupon> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
+    }
+
+    @Override
+    public String toString() {
+        return "Company [name=" + name + ", email=" + email + "]";
+    }
+
 }

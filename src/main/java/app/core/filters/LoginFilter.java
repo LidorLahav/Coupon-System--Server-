@@ -17,31 +17,31 @@ import app.core.sessions.SessionContext;
 
 public class LoginFilter implements Filter {
 
-	private SessionContext sessionCtx;
+    private SessionContext sessionCtx;
 
-	public LoginFilter(SessionContext sessionCtx) {
-		super();
-		this.sessionCtx = sessionCtx;
-	}
+    public LoginFilter(SessionContext sessionCtx) {
+        super();
+        this.sessionCtx = sessionCtx;
+    }
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		String token = req.getHeader("token");
-		Session session = sessionCtx.getSession(token);
-		if (token != null && session != null) {
-			// if we are here we have a valid session
-			System.out.println("session good - forwarding the request");//for testing
-			session.resetLastAccessed();
-			chain.doFilter(request, response);
-		} else {
-			// if we are here, we do not have a valid session
-			System.out.println("NO session - block the request");//for testing
-			HttpServletResponse resp = (HttpServletResponse) response;
-			resp.sendError(HttpStatus.UNAUTHORIZED.value(), "you are not logged in");
-		}
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        String token = req.getHeader("token");
+        Session session = sessionCtx.getSession(token);
+        if (token != null && session != null) {
+            // if we are here we have a valid session
+            System.out.println("session good - forwarding the request");// for testing
+            session.resetLastAccessed();
+            chain.doFilter(request, response);
+        } else {
+            // if we are here, we do not have a valid session
+            System.out.println("NO session - block the request");// for testing
+            HttpServletResponse resp = (HttpServletResponse) response;
+            resp.sendError(HttpStatus.UNAUTHORIZED.value(), "you are not logged in");
+        }
 
-	}
+    }
 
 }

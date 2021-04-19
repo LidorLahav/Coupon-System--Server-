@@ -12,28 +12,25 @@ import app.core.entities.Coupon.Category;
 @Transactional
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 
-	void deleteByCompanyId(int id);
+    void deleteByCompanyId(int id);
 
-	List<Coupon> findByCompanyId(int companyId);
+    List<Coupon> findByCompanyId(int companyId);
 
-	List<Coupon> findByCustomersId(int customerId);
+    List<Coupon> findByCustomersId(int customerId);
 
-	Coupon findFirstByTitle(String title);
+    Coupon findFirstByTitle(String title);
 
-	Coupon findFirstById(int id);
+    Coupon findFirstById(int id);
 
-	List<Coupon> findByCategory(Category category);
+    List<Coupon> findByCategory(Category category);
 
-	List<Coupon> findByCompanyIdAndPriceLessThanEqual(int companyId, double maxPrice);
+    List<Coupon> findByCompanyIdAndPriceLessThanEqual(int companyId, double maxPrice);
 
-	//boolean existsByIdAndCustomerId(int id, int customerId);
-	boolean existsByIdAndCustomersId(int id, int customerId);
-	
-	List<Coupon> findByCustomersIdAndPriceLessThanEqual(int customerId, double maxPrice);
+    boolean existsByIdAndCustomersId(int id, int customerId);
 
-//	List<Coupon> findByEndDateBefore(LocalDate now);
+    List<Coupon> findByCustomersIdAndPriceLessThanEqual(int customerId, double maxPrice);
 
-	void deleteByEndDateBefore(LocalDate now);
+    void deleteByEndDateBefore(LocalDate now);
 
-	List<Coupon> findByCustomersIdAndCategory(int customerId, Category category);
+    List<Coupon> findByCustomersIdAndCategory(int customerId, Category category);
 }

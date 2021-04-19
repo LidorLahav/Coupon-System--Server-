@@ -24,58 +24,58 @@ import app.core.sessions.SessionContext;
 @RequestMapping("/api/Company")
 public class CompanyController {
 
-	@Autowired
-	private SessionContext sessionContext;
-	
-	private CompanyService getService(String token) {
-		return (CompanyService) sessionContext.getSession(token).getAttribute("service");
-	}
-	
-	@GetMapping("/details")
-	public Company getCompanyDetails(@RequestHeader String token) {
-		return getService(token).getCompanyDetails();
-	}
-	
-	@GetMapping("/coupons")
-	public List<Coupon> getCompanyCoupons(@RequestHeader String token){
-		return getService(token).getCompanyCoupons();
-	}
-	
-	@GetMapping("/coupons/max-price")
-	public List<Coupon> getCompanyCoupons(@RequestHeader String token, @RequestHeader double maxPrice){
-		return getService(token).getCompanyCoupons(maxPrice);
-	}
-	
-	@GetMapping("/coupons/category")
-	public List<Coupon> getCompanyCoupons(@RequestHeader String token, @RequestHeader Category category) {
-		return getService(token).getCompanyCoupons(category);
-	}
-	
-	@PostMapping("/coupons")
-	public void addCoupon(@RequestHeader String token, @RequestBody Coupon coupon) {
-		try {
-			getService(token).addCoupon(coupon);
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-		}
-	}
-	
-	@PutMapping("/coupons")
-	public void updateCoupon(@RequestHeader String token, @RequestBody Coupon coupon) {
-		try {
-			getService(token).updateCoupon(coupon);
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-		}
-	}
-	
-	@DeleteMapping("/coupons")
-	public void deleteCoupon(@RequestHeader String token, @RequestHeader int id) {
-		try {
-			getService(token).deleteCoupon(id);
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-		}
-	}
-	
+    @Autowired
+    private SessionContext sessionContext;
+
+    private CompanyService getService(String token) {
+        return (CompanyService) sessionContext.getSession(token).getAttribute("service");
+    }
+
+    @GetMapping("/details")
+    public Company getCompanyDetails(@RequestHeader String token) {
+        return getService(token).getCompanyDetails();
+    }
+
+    @GetMapping("/coupons")
+    public List<Coupon> getCompanyCoupons(@RequestHeader String token) {
+        return getService(token).getCompanyCoupons();
+    }
+
+    @GetMapping("/coupons/max-price")
+    public List<Coupon> getCompanyCoupons(@RequestHeader String token, @RequestHeader double maxPrice) {
+        return getService(token).getCompanyCoupons(maxPrice);
+    }
+
+    @GetMapping("/coupons/category")
+    public List<Coupon> getCompanyCoupons(@RequestHeader String token, @RequestHeader Category category) {
+        return getService(token).getCompanyCoupons(category);
+    }
+
+    @PostMapping("/coupons")
+    public void addCoupon(@RequestHeader String token, @RequestBody Coupon coupon) {
+        try {
+            getService(token).addCoupon(coupon);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
+    @PutMapping("/coupons")
+    public void updateCoupon(@RequestHeader String token, @RequestBody Coupon coupon) {
+        try {
+            getService(token).updateCoupon(coupon);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/coupons")
+    public void deleteCoupon(@RequestHeader String token, @RequestHeader int id) {
+        try {
+            getService(token).deleteCoupon(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
 }

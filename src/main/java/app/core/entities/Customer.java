@@ -16,98 +16,96 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "customers")
 public class Customer {
-	
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String password;
-	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
-	@JoinTable(name = "customers_vs_coupons", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "coupon_id"))
-	private List<Coupon> coupons;
-	
-	public Customer() {
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+    @JoinTable(name = "customers_vs_coupons", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "coupon_id"))
+    private List<Coupon> coupons;
 
-	public Customer(String firstName, String lastName, String email, String password) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-	}
+    public Customer() {
+    }
 
-	public void addCoupon(Coupon coupon) {// TODO: check if needed
-		if (this.coupons == null) {
-			this.coupons = new ArrayList<Coupon>();
-		}
-		coupon.addCustomer(this);
-		this.coupons.add(coupon);
-	}
-	
-	public int getId() {
-		return id;
-	}
+    public Customer(String firstName, String lastName, String email, String password) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void addCoupon(Coupon coupon) {
+        if (this.coupons == null) {
+            this.coupons = new ArrayList<Coupon>();
+        }
+        coupon.addCustomer(this);
+        this.coupons.add(coupon);
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setFirstName(String firstName) {
-		if(firstName != null && firstName != "") {
-			this.firstName = firstName;
-		}
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setLastName(String lastName) {
-		if(lastName != null && lastName != "") {
-			this.lastName = lastName;
-		}
-	}
+    public void setFirstName(String firstName) {
+        if (firstName != null && firstName != "") {
+            this.firstName = firstName;
+        }
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setEmail(String email) {
-		if(email != null && email != "") {
-			this.email = email;
-		}
-	}
+    public void setLastName(String lastName) {
+        if (lastName != null && lastName != "") {
+            this.lastName = lastName;
+        }
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setPassword(String password) {
-		if(password != null && password != "") {
-			this.password = password;
-		}
-	}
+    public void setEmail(String email) {
+        if (email != null && email != "") {
+            this.email = email;
+        }
+    }
 
-	public List<Coupon> getCoupons() {
-		return coupons;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setCoupons(List<Coupon> coupons) {
-		this.coupons = coupons;
-	}
+    public void setPassword(String password) {
+        if (password != null && password != "") {
+            this.password = password;
+        }
+    }
 
-	@Override
-	public String toString() {
-		return "Customer [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
-	}
-	
-	
+    public List<Coupon> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+    }
+
 }
