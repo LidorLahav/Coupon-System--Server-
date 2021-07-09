@@ -18,145 +18,120 @@ import app.core.repositories.CustomerRepository;
 @Service
 @Transactional
 public class AdminService extends ClientService {
-
-    @Autowired
-    public AdminService(CompanyRepository companyRepository, CouponRepository couponRepository,
-            CustomerRepository customerRepository) {
-        super(companyRepository, couponRepository, customerRepository);
-    }
-
-    @Override
-    public boolean login(String email, String password) {
-        if (email.equals("admin@admin.com") && password.equals("admin")) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Adds company to the database only if: the company not appears in the database
-     * (checks by company id) the company name or email doesn't belongs to another
-     * company in the database
-     * 
-     * @param company
-     * @throws CouponSystemException
-     */
-    public void addCompany(Company company) throws CouponSystemException {
-        if (companyRepository.existsById(company.getId())) {
-            throw new CouponSystemException(
-                    "The id of the company already exist in the system. Can't add company with the same id.");
-        }
-        if (companyRepository.existsByName(company.getName())) {
-            throw new CouponSystemException(
-                    "The name of the company already exist in the system. Can't add company with the same name.");
-        }
-        if (companyRepository.existsByEmail(company.getEmail())) {
-            throw new CouponSystemException(
-                    "the email of the company already exist in the system. Can't add company with the same email.");
-        }
-        companyRepository.save(company);
-    }
-
-    /**
-     * Updates email or password of the company only if, the company appears in the
-     * database (checks by company id). Can't update the company name.
-     * 
-     * @param company
-     * @throws CouponSystemException
-     */
-    public void updateCompany(Company company) throws CouponSystemException {
-        Company dbCompany = companyRepository.findFirstById(company.getId());
-        if (dbCompany == null) {
-            throw new CouponSystemException("The company with id: " + company.getId() + " not exist in the system.");
-        }
-        if (!dbCompany.getName().equals(company.getName())) {
-            throw new CouponSystemException("Can't update the name of the company.");
-        }
-        dbCompany.setEmail(company.getEmail());
-        dbCompany.setPassword(company.getPassword());
-    }
-
-    /**
-     * First checks if the company with @param(companyId) exists in the database and
-     * then deletes the company.
-     * 
-     * @throws CouponSystemException
-     */
-    public void deleteCompany(int companyId) throws CouponSystemException {
-        if (!companyRepository.existsById(companyId)) {
-            throw new CouponSystemException("The company not exist in the system.");
-        }
-        companyRepository.deleteById(companyId);
-    }
-
-    public List<Company> getAllCompanies() {
-        return companyRepository.findAll();
-    }
-
-    public Company getOneCompany(int companyId) throws CouponSystemException {
-        Company company = companyRepository.findFirstById(companyId);
-        if (company == null) {
-            throw new CouponSystemException("Company with id: " + companyId + ", is not exists in database");
-        }
-        return company;
-    }
-
-    /**
-     * Adds customer to the database only if: the customer not appears in the
-     * database (checks by customer id) the customer email doesn't belongs to
-     * another customer in the database
-     * 
-     * @param customer
-     * @throws CouponSystemException
-     */
-    public void addCustomer(Customer customer) throws CouponSystemException {
-        if (customerRepository.existsById(customer.getId())) {
-            throw new CouponSystemException(
-                    "The id of the customer already exist in the system. Can't add customer with the same id.");
-        }
-        if (customerRepository.existsByEmail(customer.getEmail())) {
-            throw new CouponSystemException(
-                    "The email of the customer already exist in the database. Can't add customer with the same email.");
-        }
-        customerRepository.save(customer);
-    }
-
-    public void updateCustomer(Customer customer) throws CouponSystemException {
-        Customer dbCustomer = customerRepository.findFirstById(customer.getId());
-        if (dbCustomer == null) {
-            throw new CouponSystemException("The customer with id: " + customer.getId() + " not exist in the system.");
-        }
-        dbCustomer.setEmail(customer.getEmail());
-        dbCustomer.setFirstName(customer.getFirstName());
-        dbCustomer.setLastName(customer.getLastName());
-        dbCustomer.setPassword(customer.getPassword());
-    }
-
-    public void deleteCustomer(int customerId) throws CouponSystemException {
-        if (!customerRepository.existsById(customerId)) {
-            throw new CouponSystemException("The customer not exist in the system.");
-        }
-        customerRepository.deleteById(customerId);
-    }
-
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
-    }
-
-    public Customer getOneCustomer(int customerId) throws CouponSystemException {
-        Customer customer = customerRepository.findFirstById(customerId);
-        if (customer == null) {
-            throw new CouponSystemException("Customer with id: " + customerId + ", is not exists in database");
-        }
-        return customer;
-    }
-
-    public List<Coupon> getCompanyCoupons(int companyId) {
-        return couponRepository.findByCompanyId(companyId);
-    }
-
-    public List<Coupon> getCustomerCoupons(int customerId) {
-        return couponRepository.findByCustomersId(customerId);
-    }
-
+	
+	@Autowired
+	public AdminService(CompanyRepository companyRepository, CouponRepository couponRepository,
+			CustomerRepository customerRepository) {
+		super(companyRepository, couponRepository, customerRepository);
+	}
+	
+	@Override
+	public boolean login(String email, String password) {
+		if(email.equals("admin@admin.com") && password.equals("admin")){
+			return true;
+		}
+		return false;
+	}
+	
+	public int addCompany(Company company) throws CouponSystemException {
+		if(companyRepository.existsById(company.getId())) {
+			throw new CouponSystemException("The id of the company already exist in the system. Can't add company with the same id.");
+		}
+		if(companyRepository.existsByName(company.getName())) {
+			throw new CouponSystemException("The name of the company already exist in the system. Can't add company with the same name.");
+		}
+		if(companyRepository.existsByEmail(company.getEmail())) {
+			throw new CouponSystemException("the email of the company already exist in the system. Can't add company with the same email.");
+		}
+		return companyRepository.save(company).getId();
+	}
+	
+	public void updateCompany(Company company) throws CouponSystemException {
+		Company dbCompany = companyRepository.findFirstById(company.getId());
+		if(dbCompany == null) {
+			throw new CouponSystemException("The company with id: " + company.getId() + " not exist in the system.");
+		}
+		if(!dbCompany.getName().equals(company.getName())) {
+			throw new CouponSystemException("Can't update the name of the company.");
+		}
+		dbCompany.setEmail(company.getEmail());
+		dbCompany.setPassword(company.getPassword());
+	}
+	
+	/**
+	 * first deletes all company coupons and the coupons purchases from database, 
+	 * then deletes company from database
+	 * @param email
+	 * @param password
+	 * @return true if company exists in database
+	 * @throws CouponSystemException
+	 */
+	public void deleteCompany(int companyId) throws CouponSystemException {
+		if(!companyRepository.existsById(companyId)) {
+			throw new CouponSystemException("The company not exist in the system.");
+		}
+		companyRepository.deleteById(companyId);
+	}
+	
+	public List<Company> getAllCompanies(){
+		return companyRepository.findAll();
+	}
+	
+	public Company getOneCompany(int companyId) throws CouponSystemException {
+		Company company = companyRepository.findFirstById(companyId);
+		if(company == null) {
+			throw new CouponSystemException("Company with id: " + companyId + ", is not exists in database");
+		}
+		return company;
+	}
+	
+	public int addCustomer(Customer customer) throws CouponSystemException {
+		if(customerRepository.existsById(customer.getId())) {
+			throw new CouponSystemException("The id of the customer already exist in the system. Can't add customer with the same id.");
+		}
+		if(customerRepository.existsByEmail(customer.getEmail())) {
+			throw new CouponSystemException("The email of the customer already exist in the database. Can't add customer with the same email.");
+		}
+		return customerRepository.save(customer).getId();
+	}
+	
+	public void updateCustomer(Customer customer) throws CouponSystemException {
+		Customer dbCustomer = customerRepository.findFirstById(customer.getId());
+		if(dbCustomer == null) {
+			throw new CouponSystemException("The customer with id: " + customer.getId() + " not exist in the system.");
+		}
+		dbCustomer.setEmail(customer.getEmail());
+		dbCustomer.setFirstName(customer.getFirstName());
+		dbCustomer.setLastName(customer.getLastName());
+		dbCustomer.setPassword(customer.getPassword());
+	}
+	
+	public void deleteCustomer(int customerId) throws CouponSystemException {
+		if(!customerRepository.existsById(customerId)) {
+			throw new CouponSystemException("The customer not exist in the system.");
+		}
+		customerRepository.deleteById(customerId);
+	}
+	
+	public List<Customer> getAllCustomers() {
+		return customerRepository.findAll();
+	}
+	
+	public Customer getOneCustomer(int customerId) throws CouponSystemException {
+		Customer customer = customerRepository.findFirstById(customerId);
+		if(customer == null) {
+			throw new CouponSystemException("Customer with id: " + customerId + ", is not exists in database");
+		}
+		return customer;
+	}
+	
+	public List<Coupon> getCompanyCoupons(int companyId) {
+		return couponRepository.findByCompanyId(companyId);
+	}
+	
+	public List<Coupon> getCustomerCoupons(int customerId){
+		return couponRepository.findByCustomersId(customerId);
+	}
+	
+	
 }

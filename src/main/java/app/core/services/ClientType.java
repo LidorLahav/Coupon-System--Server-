@@ -1,5 +1,5 @@
 package app.core.services;
 
 public enum ClientType {
-    Administrator, Company, Customer
+	Administrator, Company, Customer
 }
