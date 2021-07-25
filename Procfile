@@ -1,1 +1,1 @@
-web: java -jar target/Coupon-System_Server-*.jar
+web: java -jar target/demo-0.0.1-SNAPSHOT.jar
