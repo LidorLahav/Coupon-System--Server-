@@ -17,21 +17,21 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 @EnableSwagger2
-public class SpringJpaDataLesson71Application {
+public class Main {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext ctx = SpringApplication.run(SpringJpaDataLesson71Application.class, args);
-		Test t = ctx.getBean(Test.class);
-		t.testAll();
-	}
-	
-	@Bean
-	public FilterRegistrationBean<LoginFilter> filterRegistration(JwtUtil jwt) {
-		FilterRegistrationBean<LoginFilter> filterRegistrationBean = new FilterRegistrationBean<LoginFilter>();
-		LoginFilter loginFilter = new LoginFilter(jwt);
-		filterRegistrationBean.setFilter(loginFilter);
-		filterRegistrationBean.addUrlPatterns("/api/*");
-		return filterRegistrationBean;
-	}
+    public static void main(String[] args) {
+        ConfigurableApplicationContext ctx = SpringApplication.run(Main.class, args);
+        Test t = ctx.getBean(Test.class);
+        t.testAll();
+    }
+
+    @Bean
+    public FilterRegistrationBean<LoginFilter> filterRegistration(JwtUtil jwt) {
+        FilterRegistrationBean<LoginFilter> filterRegistrationBean = new FilterRegistrationBean<LoginFilter>();
+        LoginFilter loginFilter = new LoginFilter(jwt);
+        filterRegistrationBean.setFilter(loginFilter);
+        filterRegistrationBean.addUrlPatterns("/api/*");
+        return filterRegistrationBean;
+    }
 
 }
