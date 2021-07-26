@@ -7,10 +7,10 @@
         <version>2.5.3</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.lidor</groupId>
-    <artifactId>demo</artifactId>
+    <groupId>lidor.com</groupId>
+    <artifactId>Coupon-System</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <name>Coupon-System</name>
     <description>coupons project for Spring Boot</description>
     <dependencies>
 
@@ -87,6 +87,35 @@
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>3.0.3</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>src.main.java.app.core.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.heroku</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>9.0.41.0</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
