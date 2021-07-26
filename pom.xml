@@ -8,7 +8,7 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lidor</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>coupons</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>coupons</name>
     <description>coupons project for Spring Boot</description>
