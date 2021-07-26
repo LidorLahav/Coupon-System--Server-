@@ -12,6 +12,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Coupon-System</name>
     <description>coupons project for Spring Boot</description>
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
