@@ -28,7 +28,7 @@ public class JwtUtil {
     private String encodedSecretKey = "this+is+my+key+and+it+must+be+at+least+256+bits+long";
     private Key decodedSecretKey = new SecretKeySpec(Base64.getDecoder().decode(encodedSecretKey),
             this.signatureAlgorithm);
-    private JwtParser jwtParser = Jwts.parser().setSigningKey(this.decodedSecretKey);// .build();
+    private JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(this.decodedSecretKey).build();
 
     public String generateToken(Object user, ClientType clientType) {
         Map<String, Object> claims = new HashMap<>();
@@ -71,7 +71,7 @@ public class JwtUtil {
 
                 .setExpiration(Date.from(now.plus(10, ChronoUnit.HOURS)))
 
-                .signWith(null, this.decodedSecretKey)
+                .signWith(this.decodedSecretKey)
 
                 .compact();
     }
@@ -89,13 +89,13 @@ public class JwtUtil {
         return extractAllClaims(token).getId();
     }
 
-    public String extractPassword(String token) {
-        return (String) extractAllClaims(token).get("password");
-    }
-
     public Date extractExpiration(String token) {
         return extractAllClaims(token).getExpiration();
     }
+
+    // public void setExpiration(String token) {
+    // jwtParser.parseClaimsJws(token).
+    // }
 
     private boolean isTokenExpired(String token) {
         try {
