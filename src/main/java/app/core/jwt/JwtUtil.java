@@ -89,13 +89,13 @@ public class JwtUtil {
         return extractAllClaims(token).getId();
     }
 
+    public String extractPassword(String token) {
+        return (String) extractAllClaims(token).get("password");
+    }
+
     public Date extractExpiration(String token) {
         return extractAllClaims(token).getExpiration();
     }
-
-    // public void setExpiration(String token) {
-    // jwtParser.parseClaimsJws(token).
-    // }
 
     private boolean isTokenExpired(String token) {
         try {
